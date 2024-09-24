@@ -1,7 +1,7 @@
 databaseChangeLog:
   - include:
+      file: migrations/changelog/customer.sql
+  - include:
+      file: migrations/changelog/payment-request.sql
+  - include:
       file: migrations/changelog/comment.sql
-  - include:
-    file: migrations/changelog/customer.sql
-  - include:
-    file: migrations/changelog/payment-request.sql
