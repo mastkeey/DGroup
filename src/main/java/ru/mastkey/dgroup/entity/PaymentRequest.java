@@ -28,6 +28,18 @@ public class PaymentRequest extends BaseEntity {
     @Column(name = "date_of_request")
     private ZonedDateTime dateOfRequest;
 
+    @Column(name = "contr_agent_info")
+    private String contrAgentInfo;
+
+    @Column(name = "transaction_subject")
+    private String transactionSubject;
+
+    @Column(name = "isRegular")
+    private Boolean isRegular;
+
+    @Column(name = "isLogisticNeeds")
+    private Boolean isLogisticNeeds;
+
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id", referencedColumnName = "id")

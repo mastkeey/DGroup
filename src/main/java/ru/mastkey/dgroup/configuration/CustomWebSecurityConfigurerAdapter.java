@@ -45,9 +45,11 @@ public class CustomWebSecurityConfigurerAdapter {
                 .authorizeHttpRequests(expressionInterceptUrlRegistry ->
                         expressionInterceptUrlRegistry
                                 .requestMatchers("/securityNone").anonymous()
-                                .requestMatchers("/reg").permitAll()
+                                .requestMatchers("/customer/reg").permitAll()
                                 .requestMatchers("/user").hasRole("USER")
                                 .requestMatchers("/managerr").hasRole("MANAGER")
+                                .requestMatchers("/customer/all").hasRole("MANAGER")
+                                .requestMatchers("/customer/current").hasRole("USER")
                                 .anyRequest().denyAll())
                 .authenticationManager(authenticationManagerBuilder.build())
                 .httpBasic(Customizer.withDefaults());
