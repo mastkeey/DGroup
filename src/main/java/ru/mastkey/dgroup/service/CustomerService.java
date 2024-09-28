@@ -18,8 +18,7 @@ public class CustomerService {
     public void init() {
         customerRepository.save(new Customer()
                 .setEmail("test")
-                .setPassword(passwordEncoder.encode("test"))
-                .setId(UUID.randomUUID()));
+                .setPassword(passwordEncoder.encode("test")));
     }
 
     private final CustomerRepository customerRepository;
