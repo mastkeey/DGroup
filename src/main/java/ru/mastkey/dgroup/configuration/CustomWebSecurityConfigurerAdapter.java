@@ -44,13 +44,14 @@ public class CustomWebSecurityConfigurerAdapter {
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(expressionInterceptUrlRegistry ->
                         expressionInterceptUrlRegistry
+                                .requestMatchers("/land").permitAll()
                                 .requestMatchers("/securityNone").anonymous()
                                 .requestMatchers("/customer/reg").permitAll()
                                 .requestMatchers("/user").hasRole("USER")
                                 .requestMatchers("/managerr").hasRole("MANAGER")
                                 .requestMatchers("/customer/all").hasRole("MANAGER")
                                 .requestMatchers("/customer/current").hasRole("USER")
-                                .anyRequest().denyAll())
+                                .anyRequest().authenticated())
                 .authenticationManager(authenticationManagerBuilder.build())
                 .httpBasic(Customizer.withDefaults());
         return http.build();
