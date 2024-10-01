@@ -50,7 +50,8 @@ public class CustomWebSecurityConfigurerAdapter {
                                 .requestMatchers("/user").hasRole("USER")
                                 .requestMatchers("/managerr").hasRole("MANAGER")
                                 .requestMatchers("/customer/all").hasRole("MANAGER")
-                                .requestMatchers("/customer/current").hasRole("USER")
+                                .requestMatchers("/customer/current").permitAll()
+                                .requestMatchers("/reg").permitAll()
                                 .anyRequest().authenticated())
                 .authenticationManager(authenticationManagerBuilder.build())
                 .httpBasic(Customizer.withDefaults());

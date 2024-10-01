@@ -9,4 +9,14 @@ public class LandingController {
     public String land() {
         return "lkFinal.html";
     }
+
+    @GetMapping("/reg")
+    public String registration() {
+        return "lkRegistration.html";
+    }
+
+    @GetMapping()
+    public String showMainPage() {
+        return "index.html";
+    }
 }

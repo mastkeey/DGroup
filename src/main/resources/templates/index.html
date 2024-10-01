@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Международные Переводы</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            /* Переменные для светлого режима */
+            --background-color: #f0f8ff;
+            --text-color: #444; /* Цвет текста для светлой темы (черный) */
+            --heading-color: #000; /* Цвет заголовков для светлой темы */
+            --navbar-background: #ffffff;
+            --hero-background: linear-gradient(90deg, #5AB9EA, #9bd4f0);
+            --section-background: #f9f9f9;
+            --box-background: #ffffff;
+            --footer-background: #f0f8ff;
+            --footer-text-color: #333;
+            --primary-button-color: #5AB9EA;
+            --primary-button-hover: #3498db;
+            --link-color: #5AB9EA;
+            --shadow-color:  rgba(0, 0, 0, 0.25);
+        }
+
+        [data-theme="dark"] {
+            /* Переменные для тёмного режима */
+            --background-color: #1c1c1e;
+            --text-color: #ffffff; /* Цвет текста для тёмной темы (белый) */
+            --heading-color: #ffffff; /* Цвет заголовков для тёмной темы */
+            --navbar-background: #2c2c2e;
+            --hero-background: linear-gradient(90deg, #5AB9EA, #2c3e50);
+            --section-background: #2c2c2e;
+            --box-background: #333;
+            --footer-background: #1c1c1e;
+            --footer-text-color: #e0e0e0;
+            --primary-button-color: #5AB9EA;
+            --primary-button-hover: #3498db;
+            --link-color: #5AB9EA;
+            --shadow-color: rgba(217, 217, 217, 0.492);
+        }
+
+        /* Применение переменных */
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            font-family: 'Open Sans', sans-serif;
+        }
+        p{
+            color: var(--text-color); /* Применяем переменную для текста */
+        }
+
+        /* Обновление цвета ссылок в тёмном режиме */
+        [data-theme="dark"] .navbar-item {
+            color: var(--text-color); /* Текст в хедере будет белым в тёмной теме */
+        }
+
+        .box h3, .box h3 .icon {
+            color: var(--heading-color); /* Цвет заголовка и иконки для обеих тем */
+        }
+        .hero {
+            background: linear-gradient(90deg, #5AB9EA, #82CFFD); /* Более насыщенный градиент */
+            padding: 60px 0;
+        }
+        .navbar {
+            background-color: var(--navbar-background);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .hero {
+            background: var(--hero-background);
+            padding: 60px 0;
+        }
+        .hero .title {
+            color: #ffffff;
+            font-size: 3.5rem;
+            font-weight: bold;
+        }
+
+        .hero .subtitle {
+            color: #dcdcdc;
+        }
+        .button.is-primary {
+            background-color: var(--primary-button-color);
+            border: none;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            transition: background-color 0.3s ease;
+        }
+        .button.is-primary:hover {
+            background-color: var(--primary-button-hover);
+        }
+        .section {
+            padding: 4rem 2rem;
+            background-color: var(--section-background);
+        }
+
+        .box {
+            background-color: var(--box-background);
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            padding: 2.5rem;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+        .box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 6px 25px var(--shadow-color);
+        }
+
+        .box h3 {
+            display: flex;
+            align-items: center;
+        }
+        .box h3 .icon {
+            margin-right: 10px;
+        }
+
+        .footer {
+            background-color: var(--footer-background);
+            color: var(--footer-text-color);
+            padding: 2rem;
+        }
+        .footer a {
+            color: var(--link-color);
+        }
+
+        .wk{
+            margin-bottom: 3rem;
+        }
+
+        /* Кнопка переключения тем в навигации */
+        .theme-toggle {
+            background-color: var(--primary-button-color);
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        /* Стили для переключателя */
+        .theme-switch-wrapper {
+            display: flex;
+            align-items: center;
+        }
+
+        .theme-switch {
+            display: inline-block;
+            height: 28px;
+            position: relative;
+            width: 54px;
+        }
+
+        .theme-switch input {
+            display: none;
+        }
+
+        .slider {
+            background-color: #ccc;
+            bottom: 0;
+            cursor: pointer;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            transition: 0.4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            background-color: white;
+            border-radius: 50%;
+            bottom: 4px;
+            content: "";
+            height: 20px;
+            left: 4px;
+            position: absolute;
+            transition: 0.4s;
+            width: 20px;
+        }
+
+        input:checked + .slider {
+            background-color: #5AB9EA;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .navbar-burger {
+            cursor: pointer;
+        }
+
+        .navbar-burger span {
+            background-color: var(--text-color);
+            display: block;
+            height: 2px;
+            width: 20px;
+            margin: 4px 0;
+        }
+
+        .navbar-menu {
+            display: none; /* По умолчанию скрываем меню на мобильных устройствах */
+        }
+
+        .navbar-menu.is-active {
+            display: block; /* Показываем меню, когда оно активно */
+        }
+
+
+        @media (min-width: 769px) {
+            .navbar-menu {
+                display: flex !important; /* Отображаем меню на больших экранах */
+            }
+        }
+
+
+
+        @media (max-width: 768px) {
+            .hero .title {
+                font-size: 2rem;
+            }
+            .hero .subtitle {
+                font-size: 1.25rem;
+            }
+            .section {
+                padding: 2rem 1rem;
+            }
+            .box {
+                padding: 1.5rem;
+                margin-bottom: 0.1rem;
+                margin-top: 0.1rem;
+            }
+
+            .wk{
+                margin-bottom: 1rem;
+            }
+
+        }
+        @media (max-width: 576px) {
+            .hero .title {
+                font-size: 1.75rem;
+            }
+            .hero .subtitle {
+                font-size: 1rem;
+            }
+            .navbar .navbar-end .navbar-item {
+                font-size: 0.875rem;
+            }
+            .section {
+                padding: 1.5rem 1rem;
+            }
+            .box {
+                padding: 1rem;
+            }
+            .columns {
+                display: block;
+            }
+            .column {
+                width: 100%;
+                margin-bottom: 1.5rem;
+            }
+
+            .wk{
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="#">
+                <strong style="color: var(--link-color);">Международные Переводы</strong>
+            </a>
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+
+        <div id="navbarMenu" class="navbar-menu">
+            <div class="navbar-end">
+                <a href="/reg" class="navbar-item">Войти в личный кабинет</a>                <a href="#" class="navbar-item">Контакты</a>
+            </div>
+        </div>
+        <div class="navbar-item theme-toggle-wrapper"></div>
+        <div class="theme-switch-wrapper">
+            <label class="theme-switch" for="checkbox">
+                <input type="checkbox" id="checkbox" />
+                <span class="slider"></span>
+            </label>
+            <span style="margin-left: 10px;"></span>
+        </div>
+    </div>
+    </div>
+</nav>
+
+
+
+<!-- Главный блок -->
+<section class="hero is-medium">
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <h1 class="title">Надёжные международные переводы</h1>
+            <h2 class="subtitle">Оптимальные решения для вашего бизнеса</h2>
+            <div class="buttons is-centered">
+                <a href="#" class="button is-primary is-medium">Связаться с нами</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Описание услуг -->
+<section class="section">
+    <div class="container">
+        <div class="wk">
+            <h2 class="title has-text-centered" style="color: #5AB9EA">Почему клиенты выбирают нас?</h2>
+        </div>
+        <div class="columns">
+            <div class="column">
+                <div class="box">
+                    <h3 class="title is-4"><span class="icon"><i class="fas fa-exchange-alt"></i></span> Обеспечение переводов за рубеж</h3>
+                    <p>Мы предлагаем решения для перевода денежных средств из России в зарубежные юрисдикции в обмен на поставку товаров или оказание услуг. Наши эксперты помогут выбрать наиболее подходящую схему для вашего бизнеса.</p>
+                </div>
+            </div>
+            <div class="column">
+                <div class="box">
+                    <h3 class="title is-5"><span class="icon"><i class="fas fa-project-diagram"></i></span> Различные схемы перевода</h3>
+                    <p>Мы предлагаем несколько схем перевода, учитывающих особенности товарных отношений между российскими заказчиками и зарубежными поставщиками, включая схемы через компании-нерезиденты и реэкспортные схемы.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="columns">
+            <div class="column">
+                <div class="box">
+                    <h3 class="title is-5"><span class="icon"><i class="fas fa-user-tie"></i></span> Персональный менеджер</h3>
+                    <p>Каждому заказчику назначается персональный менеджер, который сопровождает сделку на всех этапах и обеспечивает максимально комфортное взаимодействие.</p>
+                </div>
+            </div>
+            <div class="column">
+                <div class="box">
+                    <h3 class="title is-5"><span class="icon"><i class="fas fa-clock"></i></span> Сроки переводов</h3>
+                    <p>Денежные средства поступают зарубежному контрагенту в срок от одного до пяти дней в зависимости от выбранной схемы платежа, обеспечивая гибкость и скорость.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="columns">
+            <div class="column">
+                <div class="box">
+                    <h3 class="title is-5"><span class="icon"><i class="fas fa-lock"></i></span> Полная конфиденциальность</h3>
+                    <p>Все операции и информация строго конфиденциальны. Мы гарантируем приватность на всех этапах взаимодействия.</p>
+                </div>
+            </div>
+            <div class="column">
+                <div class="box">
+                    <h3 class="title is-5"><span class="icon"><i class="fas fa-shipping-fast"></i></span> Услуги "под ключ"</h3>
+                    <p>Мы также предоставляем услуги логистики для удобства наших клиентов, что позволяет предложить полное сопровождение сделки "под ключ".</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Другие секции... -->
+    </div>
+</section>
+
+<section class="hero is-medium">
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <h1 class="title">О нашей компании</h1>
+            <h2 class="subtitle">Наша миссия — обеспечить ваши международные переводы</h2>
+            <p style="margin-bottom: 10px;">Мы являемся ведущей компанией в области международных переводов, предлагая широкий спектр услуг для бизнеса и частных лиц. Наша команда экспертов имеет богатый опыт и готова предложить индивидуальные решения, чтобы удовлетворить ваши потребности в финансовых переводах.</p>
+            <div class="buttons is-centered">
+                <a href="#" class="button is-primary is-medium">Узнать больше</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Подвал -->
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p><strong style="color: var(--link-color);">Международные переводы</strong> © 2024. Все права защищены.</p>
+        <p><a href="#">Политика конфиденциальности</a> | <a href="#">Контакты</a></p>
+    </div>
+</footer>
+
+<script>
+    const toggleSwitch = document.getElementById('checkbox');
+    const currentTheme = localStorage.getItem('theme');
+    const body = document.body;
+
+    if (currentTheme) {
+        body.dataset.theme = currentTheme;
+        if (currentTheme === 'dark') {
+            toggleSwitch.checked = true;
+        }
+    }
+
+    toggleSwitch.addEventListener('change', function() {
+        if (this.checked) {
+            body.dataset.theme = 'dark';
+            localStorage.setItem('theme', 'dark');
+        } else {
+            body.dataset.theme = 'light';
+            localStorage.setItem('theme', 'light');
+        }
+    });
+
+    // Код для бургерного меню
+    document.addEventListener('DOMContentLoaded', function() {
+        // Получаем элементы бургерного меню
+        const burger = document.querySelector('.navbar-burger');
+        const menu = document.querySelector('#navbarMenu');
+
+        // Добавляем событие для открытия/закрытия меню
+        burger.addEventListener('click', function() {
+            burger.classList.toggle('is-active');
+            menu.classList.toggle('is-active');
+        });
+    });
+</script>
+
+
+</body>
+</html>
