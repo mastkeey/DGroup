@@ -11,7 +11,6 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -30,31 +29,33 @@ public class CustomWebSecurityConfigurerAdapter {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder);
-
-        authenticationManagerBuilder
-                .inMemoryAuthentication()
-                .withUser("manager")
-                .password(passwordEncoder.encode("manager"))
-                .roles("MANAGER");
-
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(expressionInterceptUrlRegistry ->
                         expressionInterceptUrlRegistry
-                                .requestMatchers("/land").permitAll()
-                                .requestMatchers("/securityNone").anonymous()
                                 .requestMatchers("/customer/reg").permitAll()
                                 .requestMatchers("/user").hasRole("USER")
                                 .requestMatchers("/managerr").hasRole("MANAGER")
                                 .requestMatchers("/customer/all").hasRole("MANAGER")
                                 .requestMatchers("/customer/current").permitAll()
-                                .requestMatchers("/reg").permitAll()
-                                .anyRequest().authenticated())
-                .authenticationManager(authenticationManagerBuilder.build())
-                .httpBasic(Customizer.withDefaults());
+                                .requestMatchers("/lk").hasRole("USER")
+                                .anyRequest().permitAll())
+                .formLogin(Customizer.withDefaults())
+                .httpBasic(Customizer.withDefaults())
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/land")
+                        .invalidateHttpSession(true)
+                        .clearAuthentication(true)
+                        .deleteCookies("JSESSIONID"));
         return http.build();
+    }
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder builder) throws Exception {
+        builder.userDetailsService(customUserDetailsService)
+                .passwordEncoder(passwordEncoder);
+        builder.inMemoryAuthentication().withUser("manager").password("manager").roles("USER", "MANAGER");
     }
 }

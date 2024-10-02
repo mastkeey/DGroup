@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -234,7 +234,7 @@
                 </label>
                 <span style="margin-left: 10px;"></span>
             </div>
-            <a href="#" class="navbar-item">Выйти</a>
+            <a class="nav-link active" aria-current="page" th:href="@{/logout}">Logout</a>
         </div>
     </div>
 </nav>

@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class LandingController {
-    @GetMapping("/land")
+    @GetMapping("/lk")
     public String land() {
         return "lkFinal.html";
     }
@@ -15,7 +15,7 @@ public class LandingController {
         return "lkRegistration.html";
     }
 
-    @GetMapping()
+    @GetMapping("/land")
     public String showMainPage() {
         return "index.html";
     }
