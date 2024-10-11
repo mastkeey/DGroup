@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --background-color: #f0f8ff;
+            --text-color: #444;
+            --heading-color: #000;
+            --navbar-background: #ffffff;
+            --hero-background: linear-gradient(90deg, #5AB9EA, #9bd4f0);
+            --section-background: #f9f9f9;
+            --box-background: #ffffff;
+            --footer-background: #f0f8ff;
+            --footer-text-color: #333;
+            --primary-button-color: #5AB9EA;
+            --primary-button-hover: #3498db;
+            --link-color: #5AB9EA;
+            --shadow-color: rgba(0, 0, 0, 0.25);
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            font-family: 'Open Sans', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .box {
+            background-color: var(--box-background);
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px var(--shadow-color);
+        }
+
+        .register-btn {
+            background-color: var(--primary-button-color);
+            border: none;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .register-btn:hover {
+            background-color: var(--primary-button-hover);
+        }
+    </style>
+</head>
+<body>
+<section class="section">
+    <div class="container">
+        <div class="columns is-centered">
+            <div class="column is-half">
+                <div class="box">
+                    <h3 class="title" style="color: var(--heading-color);">Регистрация</h3>
+                    <form id="registration-form">
+                        <div class="field">
+                            <label class="label">ИНН</label>
+                            <div class="control">
+                                <input class="input" type="text" id="inn" placeholder="Введите ваш ИНН" required>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Номер телефона</label>
+                            <div class="control">
+                                <input class="input" type="text" id="phone" placeholder="Введите ваш номер телефона" required>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Email</label>
+                            <div class="control">
+                                <input class="input" type="email" id="email" placeholder="Введите ваш email" required>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Пароль</label>
+                            <div class="control">
+                                <input class="input" type="password" id="password" placeholder="Введите ваш пароль" required>
+                            </div>
+                        </div>
+
+                        <div class="control">
+                            <button type="submit" class="register-btn">Зарегистрироваться</button>
+                        </div>
+                    </form>
+                    <p id="error-message" style="color: red; display: none;"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.getElementById('registration-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const customerData = {
+            inn: document.getElementById('inn').value,
+            phone: document.getElementById('phone').value,
+            email: document.getElementById('email').value,
+            password: document.getElementById('password').value
+        };
+
+        fetch('/customer/reg', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(customerData)
+        })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = "/land"; // Редирект на /land при успешной регистрации
+                } else {
+                    return response.json().then(data => {
+                        throw new Error(data.message || 'Ошибка при регистрации');
+                    });
+                }
+            })
+            .catch(error => {
+                document.getElementById('error-message').textContent = error.message;
+                document.getElementById('error-message').style.display = 'block';
+            });
+    });
+</script>
+
+</body>
+</html>
